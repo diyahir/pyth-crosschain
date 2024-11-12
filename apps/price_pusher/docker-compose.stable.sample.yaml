@@ -13,31 +13,34 @@ services:
 
     # Replace <version> with the latest released image of the price pusher from here:
     # https://gallery.ecr.aws/pyth-network/xc-price-pusher
-    image: public.ecr.aws/pyth-network/xc-price-pusher:v<version>
+    image: public.ecr.aws/pyth-network/xc-price-pusher:v8.1.0
     restart: always
     command:
       - "npm"
       - "run"
       - "start"
       - "--"
-      - "evm"
+      - "fuel"
       - "--endpoint"
       # Replace this with RPC endpoint URL for the EVM network.
-      - "https://bsc-dataseed2.binance.org"
-      - "--mnemonic-file"
-      - "/mnemonic"
+      - "https://mainnet.fuel.network/v1/graphql"
+      - "--private-key-file"
+      - "/mnemonic.txt"
       # Replace this with the address of the Pyth contract on the EVM network.
       - "--pyth-contract-address"
-      - "0xd7308b14BF4008e7C7196eC35610B1427C5702EA"
+      - "0x1c86fdd9e0e7bc0d2ae1bf6817ef4834ffa7247655701ee1b031b52a24c523da"
       - "--price-service-endpoint"
       - "https://hermes.pyth.network" # Replace this with a private Hermes RPC for more reliability
       - "--price-config-file"
-      - "/price_config"
+      - "/price-config.stable.sample.yaml"
     configs:
       - mnemonic
       - price_config
+    volumes:
+      - ./price-config.stable.sample.yaml:/price-config.stable.sample.yaml
+      - ./mnemonic.txt:/mnemonic.txt
 configs:
   mnemonic:
-    file: ./path/to/mnemonic.txt # Replace this with the path to the mnemonic file
+    file: mnemonic.txt # Replace this with the path to the mnemonic file
   price_config:
-    file: ./price-config.stable.sample.yaml # Replace this with the path to the price configuration file
+    file: price-config.stable.sample.yaml # Replace this with the path to the price configuration file

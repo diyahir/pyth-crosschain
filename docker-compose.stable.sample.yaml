@@ -1,0 +1,3 @@
+volumes:
+  - ./price-config.stable.sample.yaml:/price-config.stable.sample.yaml
+  - ./mnemonic.txt:/mnemonic.txt 

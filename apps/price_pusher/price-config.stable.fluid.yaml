@@ -1,30 +1,30 @@
 - alias: ETH/USD
   id: ff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0ace
-  time_difference: 300
+  time_difference: 60
   price_deviation: 0.5
   confidence_ratio: 1
 - alias: WSTETH/USD
   id: 6df640f3b8963d8f8358f791f352b8364513f6ab1cca5ed3f1f7b5448980e784
-  time_difference: 300
+  time_difference: 60
   price_deviation: 0.5
   confidence_ratio: 1
 - alias: EZETH/USD
   id: 06c217a791f5c4f988b36629af4cb88fad827b2485400a358f3b02886b54de92
-  time_difference: 300
+  time_difference: 60
   price_deviation: 0.5
   confidence_ratio: 1
 - alias: WEETH/USD
   id: 9ee4e7c60b940440a261eb54b6d8149c23b580ed7da3139f7f08f4ea29dad395
-  time_difference: 300
+  time_difference: 60
   price_deviation: 0.5
   confidence_ratio: 1
 - alias: RSETH/USD
   id: 0caec284d34d836ca325cf7b3256c078c597bc052fbd3c0283d52b581d68d71f
-  time_difference: 300
+  time_difference: 60
   price_deviation: 0.5
   confidence_ratio: 1
 - alias: METH/USD
   id: fbc9c3a716650b6e24ab22ab85b1c0ef4141b18f4590cc0b986e2f9064cf73d6
-  time_difference: 300
+  time_difference: 60
   price_deviation: 0.5
   confidence_ratio: 1
