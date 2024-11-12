@@ -1,7 +1,7 @@
 # Pyth Crosschain
 
 This repository acts as a monorepo for the various components that make up
-Pyth protocols.
+Pyth Crosschain.
 
 Within this monorepo you will find the following subprojects:
 
@@ -12,7 +12,7 @@ Within this monorepo you will find the following subprojects:
 This directory contains on-chain contracts and SDKs for all of the various
 blockchain runtimes that Pyth supports. Each subdirectory corresponds to a
 blockchain runtime. Inside each subdirectory, there are subfolders for
-contracts and SDKs.
+contracts, SDKs, and examples.
 
 ## Hermes
 
@@ -27,13 +27,7 @@ The [`price_service/client`](./price_service/client/) directory provides an SDK 
 However, most users will interact with the price service via a chain-specific SDK
 
 For a guide on utilising this service in your project, see the chain-specific SDK
-and [examples](https://github.com/pyth-network/pyth-examples/tree/main/price_feeds) for your blockchain runtime in the `target_chains` directory.
-
-## Fortuna
-
-> [fortuna](./apps/fortuna/)
-
-Fortuna is an off-chain service which can be used by [Entropy](https://pyth.network/entropy) providers.
+and examples for your blockchain runtime in the `target_chains` directory.
 
 ## Development
 
@@ -75,41 +69,21 @@ Integration tests run in Tilt (via the `tilt ci` command). The Tilt CI workflow 
 
 ### Typescript Monorepo
 
-All of the typescript / javascript packages in this repository are part of a
-[turborepo](https://turbo.build/repo/docs) monorepo.
+All of the typescript / javascript packages in this repository are part of a lerna monorepo.
+This setup allows each package to reference the current version of the others.
+You can install dependencies using `npm ci` from the repository root.
+You can build all of the packages using `npx lerna run build` and test with `npx lerna run test`.
 
-#### Setting up
+Lerna has some common failure modes that you may encounter:
 
-If you use nix and direnv, just cd to the project directory and `direnv allow`.
-
-If you use nix but not direnv, just cd to the project directory and enter a nix
-development shell with `nix develop`.
-
-If you don't use nix at all, then install the required system packages:
-
-- [Node.js](https://nodejs.org/en) -- match the version to `.nvmrc`; you can use
-  [nvm](https://github.com/nvm-sh/nvm) to manage your Node.js version.
-- [pnpm](https://pnpm.io/) -- match the version to the version specified in
-  `package.json`; you can experiment with
-  [corepack](https://nodejs.org/api/corepack.html) to manage your pnpm version
-  for you.
-
-#### Common tasks
-
-The following tasks are the most common ways to interact with the monorepo.
-Thanks to [turborepo](https://turbo.build/repo/docs), these tasks will
-coordinate building any needed dependencies, and task execution will be cached
-and will only re-run as necessary. For any of the following tasks, you can pass
-[any valid `turbo run` option](https://turbo.build/repo/docs/reference/run)
-after `--`, for instance you could run `pnpm test -- --concurrency 2`.
-
-- `pnpm test`: Run all unit tests, integration tests, linting, and format
-  checks, as well as whatever other code checks any packages support.
-- `pnpm fix`: Run auto fixes, including reformatting code and auto-fixing lint
-  rules where possible.
-- `pnpm start:dev`: Start all development servers in parallel.
-- `pnpm start:prod`: Run production builds and start production mode servers in
-  parallel.
+1. `npm ci` fails with a typescript compilation error about a missing package.
+   This error likely means that the failing package has a `prepare` entry compiling the typescript in its `package.json`.
+   Fix this error by moving that logic to the `prepublishOnly` entry.
+2. The software builds locally but fails in CI, or vice-versa.
+   This error likely means that some local build caches need to be cleaned.
+   The build error may not indicate that this is a caching issue, e.g., it may appear that the packages are being built in the wrong order.
+   Delete `node_modules/`, `lib/` and `tsconfig.tsbuildinfo` from each package's subdirectory. then try again.
+3. `npm ci` fails due to wrong node version. Make sure to be using `v18`. Node version `v21` is not supported and known to cause issues.
 
 ## Audit / Feature Status
 
